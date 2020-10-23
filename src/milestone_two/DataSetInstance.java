@@ -1,19 +1,11 @@
 package milestone_two;
 
-import java.util.Properties;
-import java.util.logging.Logger;
-
-import milestone_one.ManageProperties;
 import milestone_two.EnumContainer.Classifier;
 import milestone_two.EnumContainer.Feature;
 import milestone_two.EnumContainer.Sampling;
 
 public class DataSetInstance {
-	
-	private static Properties prop = ManageProperties.getInstance();
-	private static final Logger log = Logger.getLogger(DataSetInstance.class.getName());
-	private static String project = "PROJECT";
-	
+		
 	private String dataset;
 	private int trainingRelease;//n di training release
 	private double trainingPercentage;//
@@ -34,12 +26,11 @@ public class DataSetInstance {
 	private double nRun = 0;
 
 	public DataSetInstance() {
-		// TODO Auto-generated constructor stub
+		// nothing to do
 	}
 
 	public DataSetInstance(String project2, int trainingRelease2, Classifier classifier2, Classifier classifier3, 
-			Feature feature2, Sampling sampling2, double d, double e, double f, 
-			double g, double h, double i, double j, double k) {
+			Feature feature2, Sampling sampling2) {
 		setDataset(project2);
 		setTrainingRelease(trainingRelease2);
 		setClassifier(classifier2);

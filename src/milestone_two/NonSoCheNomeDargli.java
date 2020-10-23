@@ -2,6 +2,7 @@ package milestone_two;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,8 @@ public class NonSoCheNomeDargli {
 	private static Instances trainingSet = null;
 	private static Instances testingSet = null;
 	
+	private static String Exception= "Exception";
+	
 	
 	
 	private static List<DataSetInstance> averageDataSetInstances = new ArrayList<>();
@@ -60,7 +63,7 @@ public class NonSoCheNomeDargli {
 			source = new DataSource(prop.getProperty(project)+"_Data_Set.arff");
 			dataset = source.getDataSet();
 		} catch (Exception e) {
-			log.log(Level.SEVERE, "Exception" , e);
+			log.log(Level.SEVERE, Exception , e);
 		}
 		
 		
@@ -92,9 +95,7 @@ public class NonSoCheNomeDargli {
 		int numAttr = dataset.numAttributes();
 		for (int instIdx = 0; instIdx < numInstances; instIdx++) {
 			Instance currInst = dataset.instance(instIdx);
-			//System.out.println(currInst.toString());
 			String buggyString = currInst.stringValue(numAttr-1);
-			//System.out.println(buggyString);
 			if (buggyString.equalsIgnoreCase("Yes")) {
 				yes++;
 			}else {
@@ -163,7 +164,7 @@ public class NonSoCheNomeDargli {
 					filteredTesting = Filter.useFilter(testing, filter);
 					filteredTesting.setClassIndex(numAttrFiltered - 1);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, "Exception" , e);
+					log.log(Level.SEVERE, Exception , e);
 				}
 				
 				samplingSelection(filteredTraining, filteredTesting);
@@ -193,7 +194,6 @@ public class NonSoCheNomeDargli {
 			Instances filteredTesting = new Instances(testing);
 			switch (sampling) {
 			case NO_SAMPLING:
-				//TODO Evaluate classifier
 				evaluate(filteredTraining, filteredTesting, null);
 				break;
 			case OVER_SAMPLING:
@@ -205,7 +205,7 @@ public class NonSoCheNomeDargli {
 					// TODO CAPIRE SE CI VA O MENO
 					resample.setInputFormat(training);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, "Exception" , e);
+					log.log(Level.SEVERE, Exception , e);
 				}
 								
 				fc.setFilter(resample);
@@ -218,7 +218,7 @@ public class NonSoCheNomeDargli {
 				try {
 					spreadSubsample.setOptions(optsUnder);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, "Exception" , e);
+					log.log(Level.SEVERE, Exception , e);
 				}
 				fc.setFilter(spreadSubsample);
 				evaluate(filteredTraining, filteredTesting, fc);
@@ -228,7 +228,7 @@ public class NonSoCheNomeDargli {
 				try {
 					smote.setInputFormat(filteredTraining);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, "Exception" , e);
+					log.log(Level.SEVERE, Exception , e);
 				}
 				fc.setFilter(smote);
 				evaluate(filteredTraining, filteredTesting, fc);
@@ -268,18 +268,24 @@ public class NonSoCheNomeDargli {
 			} catch (Exception e) {
 				//System.out.println(training.toString());
 				System.out.println("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling);
-				log.log(Level.SEVERE, "Exception" , e);
+				log.log(Level.SEVERE, Exception , e);
 				return;
 			}
 		}
 		else {
 			try {
+				if (Objects.isNull(classifierWeka)) {
+					return;
+				}
 				classifierWeka.buildClassifier(training);
 				evaluation = new Evaluation(testing);
 				evaluation.evaluateModel(classifierWeka, testing);
 			} catch (Exception e) {
-				log.log(Level.SEVERE, "Exception" , e);
+				log.log(Level.SEVERE, Exception , e);
 			}
+		}
+		if (Objects.isNull(evaluation)) {
+			return;
 		}
 		System.out.println("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling+", number of training release: "+trainingRelease);
 		System.out.println("Kappa: "+evaluation.kappa()+", Recall: "+evaluation.recall(1));
@@ -297,7 +303,6 @@ public class NonSoCheNomeDargli {
 		try {
 			System.out.println(evaluation.toClassDetailsString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

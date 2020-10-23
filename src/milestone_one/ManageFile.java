@@ -27,6 +27,7 @@ public class ManageFile {
 		//empty
 	}
 	
+	/*Function tu use test list created */
 	public static List<FileProject> retrieveFiles() throws IOException {
 		log.info("Retrieve all files..");
 		String filesString = "Test"+prop.getProperty(project);

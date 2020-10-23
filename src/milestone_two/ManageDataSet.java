@@ -6,14 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.module.ModuleDescriptor.Version;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import milestone_one.ManageFile;
 import milestone_one.ManageProperties;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
@@ -66,8 +64,14 @@ public class ManageDataSet {
 			versionLineInfo.add(lineNumber);
 		} catch (java.io.IOException e) {
 			log.log(Level.SEVERE, iOException , e);
+		}finally {
+			try {
+				bufferedReader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		System.out.println(versionLineInfo.toString());
+		
 		return versionLineInfo;
 	}
 	
@@ -91,7 +95,6 @@ public class ManageDataSet {
 	    	saver.setFile(new File(prop.getProperty("PROJECT")+"_Data_Set.arff"));
 			saver.writeBatch();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    

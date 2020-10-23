@@ -16,7 +16,6 @@ public class ManageProperties {
 	
 	public ManageProperties() {
 		//Nothing to do
-		String basePath = new File("").getAbsolutePath();
 	}
 	
 	//implemets singleton for Properties and InputStream istancies
