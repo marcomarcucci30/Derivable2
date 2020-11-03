@@ -10,8 +10,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.tools.Diagnostic;
+import javax.xml.crypto.Data;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,6 +25,7 @@ import java.time.temporal.ChronoUnit;
 public class Prova {
 
 	private static final Logger log = Logger.getLogger(Prova.class.getName());
+	private static Properties prop = ManageProperties.getInstance();
 	private static String fields = "fields";
 	private static String releaseDate = "releaseDate";
 
@@ -262,6 +267,10 @@ public class Prova {
 		cmd.gitClone();
 		
 		//retrievs all file of the project
+		//if vuoi usare quelli di test chiama questo altrimenti chiama prima ManageFile.main()
+		if (Integer.parseInt(prop.getProperty("updateFiles")) == 1) {
+			ManageFile.main(null);
+		}
 		List<FileProject> filesProjects = ManageFile.retrieveFiles();
 		
 		
@@ -271,6 +280,7 @@ public class Prova {
 		long numDays = ChronoUnit.DAYS.between(dateBegin, dateEnd);
 		//middle day of project
 		LocalDate median = dateBegin.plusDays(numDays/2L);
+		System.out.println("Data di mezzo:" +median);
 		
 		//create file csv
 		log.info("Create File CSV which contains all versions..");
@@ -332,7 +342,7 @@ public class Prova {
 		//manageMetrics.orderFilesByLocChurn();
 		
 		
-		ManageFile.createCSVFile(filesProjects, versions);
+		ManageFile.createCSVFile(filesProjects, versions, median);
 		
 		log.info("Done!");
 		

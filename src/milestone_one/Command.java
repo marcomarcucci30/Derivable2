@@ -20,7 +20,8 @@ public class Command {
 	private static String gitC = "git -C";
 	private static String ioException = "IOException in command";
 	private String interruptedException = "InterruptedException in Command.";
-	private static String directoryM2="directoryM2";
+	private static String pathDir = "..\\..\\" + prop.getProperty("PROJECT").toLowerCase() +"\\";
+	private static String repoUrl = prop.getProperty("REPO_APACHE_PREFIX")+prop.getProperty("PROJECT").toLowerCase()+".git";
 
 	public Command(String keyValue) {
 		setTicket(keyValue);
@@ -39,7 +40,7 @@ public class Command {
 	//Update repository
 	public void gitPull() {
 
-		String command = gitC+" "+prop.getProperty(directoryM2)+" pull "+ prop.getProperty("repo")+"";
+		String command = gitC+" "+pathDir+" pull "+ repoUrl+"";
 		Process p = null;
 		try {
 			//execute Command
@@ -64,7 +65,7 @@ public class Command {
 	//Clone the repository in the specified directory
 	public void gitClone() {
 		
-		String command = "git clone "+prop.getProperty("repo")+" "+prop.getProperty(directoryM2)+"";
+		String command = "git clone "+repoUrl+" "+pathDir;
 		Process p = null;
 		try {
 			//execute command
@@ -88,9 +89,10 @@ public class Command {
 	
 	//return the date of the first and last commit of the project
 	public List<String> lifeProject() throws IOException {	
-		//Command log commit
-		String commandEndDate = gitC+" "+ prop.getProperty(directoryM2) +" log --pretty=format:\"%cd\" --date=iso-strict --max-count=1";
-		String commandBeginDate = gitC+" "+ prop.getProperty(directoryM2) +" rev-list --reverse --max-parents=0 HEAD --pretty=format:\"%cd\" --date=iso-strict";
+		//Command log commit prop.getProperty(directoryM2) "..\\..\\bookkeeper\\"
+		
+		String commandEndDate = gitC+" "+ pathDir +" log --pretty=format:\"%cd\" --date=iso-strict --max-count=1";
+		String commandBeginDate = gitC+" "+ pathDir +" rev-list --reverse --max-parents=0 HEAD --pretty=format:\"%cd\" --date=iso-strict";
 		
 				
 		Process pBegin = null;
@@ -146,7 +148,7 @@ public class Command {
 	//get date of the last commit
 	public static String log(String ticket) {	
 		//Command log commit
-		String command = gitC+" "+ prop.getProperty(directoryM2) +" log --pretty=format:\"%cd\" "
+		String command = gitC+" "+ pathDir +" log --pretty=format:\"%cd\" "
 				+ "--grep=" + ticket +" --date=iso-strict  --max-count=1";
 		
 		
@@ -180,7 +182,7 @@ public class Command {
 	
 	//retrieves all files from the project
 	public static List<String> getAllFiles() {
-		String command = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager log --pretty=format:\"\" --name-only *.java";
+		String command = gitC+" "+ pathDir +" --no-pager log --pretty=format:\"\" --name-only *.java";
 		
 		List<String> files = new ArrayList<>();
 		String line = null;
@@ -209,8 +211,8 @@ public class Command {
 	}
 	
 	public static List<BufferedReader> getAddRemoveDate(String filename) {
-		String commandAdd = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager log --diff-filter=A --pretty=format:\"%cd\" --date=iso-strict -- "+filename;
-		String commanRemove = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager log --diff-filter=D --pretty=format:\"%cd\" --date=iso-strict -- "+filename;
+		String commandAdd = gitC+" "+ pathDir +" --no-pager log --diff-filter=A --pretty=format:\"%cd\" --date=iso-strict -- "+filename;
+		String commanRemove = gitC+" "+ pathDir +" --no-pager log --diff-filter=D --pretty=format:\"%cd\" --date=iso-strict -- "+filename;
 		
 		Process pAdd = null;
 		Process pRemove = null;
@@ -238,7 +240,7 @@ public class Command {
 	
 	//get commit in a specified ticket
 	public static List<String> getCommit(String nameTicket) {
-		String command = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager log --pretty=format:\"%H\" "
+		String command = gitC+" "+ pathDir +" --no-pager log --pretty=format:\"%H\" "
 				+ "--grep=" + nameTicket +":";
 		
 		String line = null;
@@ -265,7 +267,7 @@ public class Command {
 	
 	//retrieves all files changed in the specified commit
 	public static List<String> getFiles(String commit) {
-		String command = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager diff-tree "
+		String command = gitC+" "+ pathDir +" --no-pager diff-tree "
 				+ "--no-commit-id --name-only -r " + commit+" *.java";
 		
 		String line = null;
@@ -292,7 +294,7 @@ public class Command {
 	
 	/*retrieves all commits in the project*/
 	public static List<List<String>> getAllCommit(){
-		String command = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager log --pretty=format:\"%cs,%H\" --reverse";
+		String command = gitC+" "+ pathDir +" --no-pager log --pretty=format:\"%cs,%H\" --reverse";
 		
 		String line = null;
 		Process p = null;
@@ -328,7 +330,7 @@ public class Command {
 	
 	//return list of file c
 	public static List<List<String>> getCommitChange(String idCommitPrev, String idCommitNext) {
-		String command = gitC+" "+ prop.getProperty(directoryM2) +" --no-pager diff --numstat "+ idCommitPrev+ " "+ idCommitNext+ " *.java";
+		String command = gitC+" "+ pathDir +" --no-pager diff --numstat "+ idCommitPrev+ " "+ idCommitNext+ " *.java";
 		
 		String line2 = null;
 		Process p = null;
@@ -369,7 +371,8 @@ public class Command {
 
 	public static void main(String[] args) {
 		//empty
-		getAllFiles();
+		System.out.println(repoUrl);
+		//getAllFiles();
 	}
 
 }

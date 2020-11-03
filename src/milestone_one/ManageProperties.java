@@ -25,7 +25,6 @@ public class ManageProperties {
         }
         if (input == null) {
         	try {
-        		//C:\\Users\\marco\\Desktop\\Project Test\\Milestone2\\trunk
 				input = new FileInputStream("JavaResources\\config.properties");
 				prop.load(input);
 			} catch (FileNotFoundException e) {

@@ -165,7 +165,7 @@ public class ManageFile {
 		return filesList;
 	}
 	
-	public static void createCSVFile(List<FileProject> filesProjects, List<Version> versions) {
+	public static void createCSVFile(List<FileProject> filesProjects, List<Version> versions, LocalDate median) {
 		
 		log.info("Create Dataset...");
 		
@@ -199,7 +199,11 @@ public class ManageFile {
 		for (int i= 0; i<versions.size(); i++) {
 			
 			//se la data della versione è oltre metà del progetto non considerare la versione
-			if (versions.get(i).getDate().isAfter(LocalDate.parse("2015-10-06"))) {
+			if (versions.get(i).getDate().isAfter(LocalDate.parse("2014-02-03")) && prop.getProperty(project).equals("BOOKKEEPER")) {
+				continue;
+			}
+			
+			if (versions.get(i).getDate().isAfter(LocalDate.parse("2010-03-30")) && prop.getProperty(project).equals("OPENJPA")) {
 				continue;
 			}
 			//itero su tutti i file del progetto
