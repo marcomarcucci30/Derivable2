@@ -103,8 +103,8 @@ public class ManageDataSet {
 	
 	public void createAverageDataset(List<DataSetInstance> dataSetInstances) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("dataset, classifier, balancing, "
-				+ "Feature Selection,TP, FP, TN, FN, Precision, Recall, ROC Area, Kappa\n");
+		sb.append("Dataset, Classifier, Feature Selection, "
+				+ "Balancing,TP, FP, TN, FN, Precision, Recall, ROC Area, Kappa\n");
 		
 		for (DataSetInstance dataSetInstance : dataSetInstances) {
 			sb.append(dataSetInstance.toStringForAverageDataset());
@@ -122,8 +122,8 @@ public class ManageDataSet {
 	
 	public void createDataset(List<DataSetInstance> dataSetInstances) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("dataset, #TrainingRelease, %training, %Defective in training, %Defective in testing, classifier, "
-				+ "balancing, Feature Selection,TP, FP, TN, FN, Precision, Recall, ROC Area, Kappa\n");
+		sb.append("Dataset, #TrainingRelease, %training, %Defective in training, %Defective in testing, Classifier, "
+				+ "Feature Selection, Balancing, TP, FP, TN, FN, Precision, Recall, ROC Area, Kappa\n");
 		
 		for (DataSetInstance dataSetInstance : dataSetInstances) {
 			sb.append(dataSetInstance.toStringForDataset());
