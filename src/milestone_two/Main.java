@@ -23,10 +23,10 @@ import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.supervised.instance.*;
 
-public class NonSoCheNomeDargli {
+public class Main {
 	
 	private static Properties prop = ManageProperties.getInstance();
-	private static final Logger log = Logger.getLogger(NonSoCheNomeDargli.class.getName());
+	private static final Logger log = Logger.getLogger(Main.class.getName());
 	private static String project = "PROJECT";
 	
 	private static EnumContainer.Classifier classifier = null;
@@ -45,7 +45,7 @@ public class NonSoCheNomeDargli {
 	private static int trainingRelease;
 	
 
-	public NonSoCheNomeDargli() {
+	public Main() {
 		// Nothing to do
 	}
 
@@ -71,9 +71,9 @@ public class NonSoCheNomeDargli {
 		for (int i=0; i<versionLineInfo.size()-2; i++) {
 			trainingRelease = i+1;
 			//create Testing
-			NonSoCheNomeDargli.trainingSet = new Instances(dataset, 0, versionLineInfo.get(i+1)-1);
+			Main.trainingSet = new Instances(dataset, 0, versionLineInfo.get(i+1)-1);
 			//create testing
-			NonSoCheNomeDargli.testingSet = new Instances(dataset, versionLineInfo.get(i+1), versionLineInfo.get(i+2)-versionLineInfo.get(i+1));
+			Main.testingSet = new Instances(dataset, versionLineInfo.get(i+1), versionLineInfo.get(i+2)-versionLineInfo.get(i+1));
 			
 			classifierSelection();
 		}
@@ -118,7 +118,7 @@ public class NonSoCheNomeDargli {
 	private static void classifierSelection(){
 		
 		for (Classifier classifier : EnumContainer.Classifier.values()) {
-			NonSoCheNomeDargli.classifier = classifier;
+			Main.classifier = classifier;
 			featureSelection();
 		}
 		
@@ -126,7 +126,7 @@ public class NonSoCheNomeDargli {
 
 	private static void featureSelection() {
 		for (Feature feature : EnumContainer.Feature.values()) {
-			NonSoCheNomeDargli.feature = feature;
+			Main.feature = feature;
 			Instances training = new Instances(trainingSet);
 			Instances testing = new Instances(testingSet);
 			
@@ -182,7 +182,7 @@ public class NonSoCheNomeDargli {
 
 	private static void samplingSelection(Instances training, Instances testing) {
 		for (Sampling sampling : EnumContainer.Sampling.values()) {
-			NonSoCheNomeDargli.sampling = sampling;
+			Main.sampling = sampling;
 			FilteredClassifier fc = new FilteredClassifier();
 			
 			Instances filteredTraining = new Instances(training);
@@ -304,8 +304,8 @@ public class NonSoCheNomeDargli {
 		log.info(String.valueOf(evaluation.numFalsePositives(0)));
 		
 		
-		double sizeDataset = NonSoCheNomeDargli.trainingSet.size() + NonSoCheNomeDargli.testingSet.size();
-		double trainingPercentage = NonSoCheNomeDargli.trainingSet.size() / sizeDataset;
+		double sizeDataset = Main.trainingSet.size() + Main.testingSet.size();
+		double trainingPercentage = Main.trainingSet.size() / sizeDataset;
 		
 		double defectiveTrainingPercentage = majorityClass(training, true);
 		double defectiveTestingPercentage = majorityClass(testing, true);
@@ -361,7 +361,7 @@ public class NonSoCheNomeDargli {
 	 * @param classifier the classifier to set
 	 */
 	public static void setClassifier(EnumContainer.Classifier classifier) {
-		NonSoCheNomeDargli.classifier = classifier;
+		Main.classifier = classifier;
 	}
 
 	/**
@@ -375,7 +375,7 @@ public class NonSoCheNomeDargli {
 	 * @param feature the feature to set
 	 */
 	public static void setFeature(EnumContainer.Feature feature) {
-		NonSoCheNomeDargli.feature = feature;
+		Main.feature = feature;
 	}
 
 	/**
@@ -389,7 +389,7 @@ public class NonSoCheNomeDargli {
 	 * @param sampling the sampling to set
 	 */
 	public static void setSampling(EnumContainer.Sampling sampling) {
-		NonSoCheNomeDargli.sampling = sampling;
+		Main.sampling = sampling;
 	}
 
 }

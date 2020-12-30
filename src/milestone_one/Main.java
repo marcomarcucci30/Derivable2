@@ -19,14 +19,14 @@ import org.json.JSONObject;
 
 import java.time.temporal.ChronoUnit;
 
-public class Prova {
+public class Main {
 
-	private static final Logger log = Logger.getLogger(Prova.class.getName());
+	private static final Logger log = Logger.getLogger(Main.class.getName());
 	private static Properties prop = ManageProperties.getInstance();
 	private static String fields = "fields";
 	private static String releaseDate = "releaseDate";
 
-	public Prova() {
+	public Main() {
 		//empty
 	}
 	public static JSONObject readJsonFromUrl(String url) throws IOException {

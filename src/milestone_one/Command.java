@@ -331,6 +331,7 @@ public class Command {
 	
 	
 	//return list of file c
+	//
 	public static List<List<String>> getCommitChange(String idCommitPrev, String idCommitNext) {
 		String command = gitC+" "+ pathDir +" --no-pager diff --numstat "+ idCommitPrev+ " "+ idCommitNext+ " *.java";
 		
