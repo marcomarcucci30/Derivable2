@@ -318,13 +318,7 @@ public class DataSetInstance {
 				return false;
 		} else if (!dataset.equals(other.dataset))
 			return false;
-		if (feature != other.feature)
-			return false;
-		if (sampling != other.sampling) {
-			return false;
-		}else {
-			return true;
-		}
+		return (feature == other.feature && sampling == other.sampling);
 			
 		
 	}
