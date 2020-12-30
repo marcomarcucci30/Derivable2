@@ -267,7 +267,7 @@ public class Prova {
 		cmd.gitClone();
 		
 		//retrievs all file of the project
-		//if vuoi usare quelli di test chiama questo altrimenti chiama prima ManageFile.main()
+		//Se si vogliono aggiornare i file dal progetto settare updatesFiles = 1
 		if (Integer.parseInt(prop.getProperty("updateFiles")) == 1) {
 			ManageFile.main(null);
 		}

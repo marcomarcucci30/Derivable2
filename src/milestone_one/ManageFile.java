@@ -198,11 +198,12 @@ public class ManageFile {
 		//iterar tutti i file per ogni versione possibile in versions
 		for (int i= 0; i<versions.size(); i++) {
 			
-			//se la data della versione è oltre metà del progetto non considerare la versione
+			//BOOKKEEPER: se la data della versione è oltre metà del progetto non considerare la versione
 			if (versions.get(i).getDate().isAfter(LocalDate.parse("2014-02-03")) && prop.getProperty(project).equals("BOOKKEEPER")) {
 				continue;
 			}
 			
+			//OPENJPA: se la data della versione è oltre metà del progetto non considerare la versione
 			if (versions.get(i).getDate().isAfter(LocalDate.parse("2010-03-30")) && prop.getProperty(project).equals("OPENJPA")) {
 				continue;
 			}
