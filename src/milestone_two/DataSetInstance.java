@@ -29,14 +29,14 @@ public class DataSetInstance {
 		// nothing to do
 	}
 
-	public DataSetInstance(String project2, int trainingRelease2, Classifier classifier2, Classifier classifier3, 
+	/*public DataSetInstance(String project2, int trainingRelease2, Classifier classifier2, Classifier classifier3, 
 			Feature feature2, Sampling sampling2) {
 		setDataset(project2);
 		setTrainingRelease(trainingRelease2);
 		setClassifier(classifier2);
 		setFeature(feature2);
 		setSampling(sampling2);
-	}
+	}*/
 
 	public DataSetInstance(String project2, int trainingRelease2, double trainingPercentage2, double defectiveTrainingPercentage2, double defectiveTestingPercentage2, Classifier classifier2,
 			Feature feature2, Sampling sampling2, double truePositiveRate, double falsePositiveRate,

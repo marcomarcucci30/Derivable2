@@ -14,9 +14,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.tools.Diagnostic;
-import javax.xml.crypto.Data;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -280,7 +277,6 @@ public class Prova {
 		long numDays = ChronoUnit.DAYS.between(dateBegin, dateEnd);
 		//middle day of project
 		LocalDate median = dateBegin.plusDays(numDays/2L);
-		System.out.println("Data di mezzo:" +median);
 		
 		//create file csv
 		log.info("Create File CSV which contains all versions..");
@@ -339,10 +335,9 @@ public class Prova {
 		manageMetrics.setVersions(versions);
 		manageMetrics.calculateMetrics();
 		
-		//manageMetrics.orderFilesByLocChurn();
+	
 		
-		
-		ManageFile.createCSVFile(filesProjects, versions, median);
+		ManageFile.createCSVFile(filesProjects, versions);
 		
 		log.info("Done!");
 		

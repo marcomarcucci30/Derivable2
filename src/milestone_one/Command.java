@@ -371,8 +371,6 @@ public class Command {
 
 	public static void main(String[] args) {
 		//empty
-		System.out.println(repoUrl);
-		//getAllFiles();
 	}
 
 }

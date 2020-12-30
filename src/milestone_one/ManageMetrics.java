@@ -1,7 +1,6 @@
 package milestone_one;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ManageMetrics {
@@ -116,47 +115,7 @@ public class ManageMetrics {
 	}
 	
 
-	/*public void orderFilesByLocChurn() {
-		
-		
-		
-		List<FileProject> lastVersionFiles = new ArrayList<>();
-		for (FileProject fileProject : files) {
-			int indexMetric = fileProject.getMetrics().indexOf(new Metrics(14));
-			if (indexMetric != -1) {
-				lastVersionFiles.add(fileProject);
-			}
-		}
-		
-		 for(int i = 0; i < lastVersionFiles.size(); i++) {
-			 
-		        boolean flag = false;
-		        for(int j = 0; j < lastVersionFiles.size()-1; j++) {
-		        
-		        	int indexMetricPrev = lastVersionFiles.get(j).getMetrics().indexOf(new Metrics(14));
-		        	int indexMetricNext = lastVersionFiles.get(j+1).getMetrics().indexOf(new Metrics(14));
-		        	System.out.println(i +", "+ j +", "+ indexMetricPrev +", "+ indexMetricNext);
-		        	
-		        	int maxLocChurnPrev = lastVersionFiles.get(j).getMetrics().get(indexMetricPrev).getLineAdded()  +  Math.abs(lastVersionFiles.get(j).getMetrics().get(indexMetricPrev).getChurn());
-		        	int maxLocChurnNext = lastVersionFiles.get(j+1).getMetrics().get(indexMetricNext).getLineAdded()  +  Math.abs(lastVersionFiles.get(j+1).getMetrics().get(indexMetricNext).getChurn());
-		        	
-		        //trovo le metriche dell'ultima versione
-		        //Se l' elemento j e maggiore del successivo allora
-		        //scambiamo i valori
-		            if(maxLocChurnPrev>maxLocChurnNext) {
-		                FileProject k = lastVersionFiles.get(j);
-		                lastVersionFiles.remove(j);
-		                lastVersionFiles.add(j+1, k);
-		                flag=true; //Lo setto a true per indicare che é avvenuto uno scambio
-		            }
-		        }
-		        if(!flag) break; //Se flag=false allora vuol dire che nell' ultima iterazione
-		                         //non ci sono stati scambi, quindi il metodo può terminare
-		                         //poiché l' array risulta ordinato
-		    }
-		 
-		 ManageFile.createLastVersionMetrics(lastVersionFiles);
-	}*/
+	
 
 	public static void main(String[] args) {
 		//empty

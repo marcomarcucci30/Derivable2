@@ -36,7 +36,7 @@ public class NonSoCheNomeDargli {
 	private static Instances trainingSet = null;
 	private static Instances testingSet = null;
 	
-	private static String Exception= "Exception";
+	private static String exception= "Exception";
 	
 	
 	
@@ -63,7 +63,7 @@ public class NonSoCheNomeDargli {
 			source = new DataSource(prop.getProperty(project)+"_Data_Set.arff");
 			dataset = source.getDataSet();
 		} catch (Exception e) {
-			log.log(Level.SEVERE, Exception , e);
+			log.log(Level.SEVERE, exception , e);
 		}
 		
 		
@@ -78,9 +78,9 @@ public class NonSoCheNomeDargli {
 			classifierSelection();
 		}
 		
-		System.out.println("\nNumber of element in list: "+averageDataSetInstances.size());
+		log.info("\nNumber of element in list: "+averageDataSetInstances.size());
 		for (DataSetInstance dataSetInstance : averageDataSetInstances) {
-			System.out.println("\n"+dataSetInstance.toString());
+			log.info("\n"+dataSetInstance.toString());
 		}
 		
 		manageDataSet.createAverageDataset(averageDataSetInstances);
@@ -159,12 +159,11 @@ public class NonSoCheNomeDargli {
 					
 					//evaluation with filtered
 					int numAttrFiltered = filteredTraining.numAttributes();
-					//TODO IL SETCLASSINDEX FORSE CONVIEN FARLO ALLA FINE
 					filteredTraining.setClassIndex(numAttrFiltered - 1);
 					filteredTesting = Filter.useFilter(testing, filter);
 					filteredTesting.setClassIndex(numAttrFiltered - 1);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, Exception , e);
+					log.log(Level.SEVERE, exception , e);
 				}
 				
 				samplingSelection(filteredTraining, filteredTesting);
@@ -176,8 +175,6 @@ public class NonSoCheNomeDargli {
 			}
 			
 			
-			//TODO	valuare il classificatore con (classifier, feature, saapling) per lo specifico
-			//run di walk-forward.
 			
 			
 		}
@@ -187,8 +184,6 @@ public class NonSoCheNomeDargli {
 		for (Sampling sampling : EnumContainer.Sampling.values()) {
 			NonSoCheNomeDargli.sampling = sampling;
 			FilteredClassifier fc = new FilteredClassifier();
-			/*Instances filteredTraining = training;
-			Instances filteredTesting = testing;*/
 			
 			Instances filteredTraining = new Instances(training);
 			Instances filteredTesting = new Instances(testing);
@@ -202,10 +197,9 @@ public class NonSoCheNomeDargli {
 				String[] optsOver = new String[]{"-B", "1.0", "-Z", zeta, "-no-replacement"};
 				try {
 					resample.setOptions(optsOver);
-					// TODO CAPIRE SE CI VA O MENO
 					resample.setInputFormat(training);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, Exception , e);
+					log.log(Level.SEVERE, exception , e);
 				}
 								
 				fc.setFilter(resample);
@@ -218,7 +212,7 @@ public class NonSoCheNomeDargli {
 				try {
 					spreadSubsample.setOptions(optsUnder);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, Exception , e);
+					log.log(Level.SEVERE, exception , e);
 				}
 				fc.setFilter(spreadSubsample);
 				evaluate(filteredTraining, filteredTesting, fc);
@@ -228,7 +222,7 @@ public class NonSoCheNomeDargli {
 				try {
 					smote.setInputFormat(filteredTraining);
 				} catch (Exception e) {
-					log.log(Level.SEVERE, Exception , e);
+					log.log(Level.SEVERE, exception , e);
 				}
 				fc.setFilter(smote);
 				evaluate(filteredTraining, filteredTesting, fc);
@@ -266,9 +260,8 @@ public class NonSoCheNomeDargli {
 				evaluation = new Evaluation(testing);
 				evaluation.evaluateModel(fc, testing);
 			} catch (Exception e) {
-				//System.out.println(training.toString());
 				System.out.println("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling);
-				log.log(Level.SEVERE, Exception , e);
+				log.log(Level.SEVERE, exception , e);
 				return;
 			}
 		}
@@ -281,36 +274,35 @@ public class NonSoCheNomeDargli {
 				evaluation = new Evaluation(testing);
 				evaluation.evaluateModel(classifierWeka, testing);
 			} catch (Exception e) {
-				log.log(Level.SEVERE, Exception , e);
+				log.log(Level.SEVERE, exception , e);
 			}
 		}
 		if (Objects.isNull(evaluation)) {
 			return;
 		}
-		System.out.println("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling+", number of training release: "+trainingRelease);
-		System.out.println("Kappa: "+evaluation.kappa()+", Recall: "+evaluation.recall(1));
+		log.info("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling+", number of training release: "+trainingRelease);
+		log.info("Kappa: "+evaluation.kappa()+", Recall: "+evaluation.recall(1));
 		
-		
-		
-		System.out.println(evaluation.confusionMatrix()[0][0]+", "+evaluation.confusionMatrix()[0][1]+", "+evaluation.confusionMatrix()[1][0]+
+		log.info(evaluation.confusionMatrix()[0][0]+", "+evaluation.confusionMatrix()[0][1]+", "+evaluation.confusionMatrix()[1][0]+
 				", "+evaluation.confusionMatrix()[1][1]+", "+evaluation.numTruePositives(0)+", "+ evaluation.numFalsePositives(0)+", "+ 
 				evaluation.trueNegativeRate(1)+", "+evaluation.falseNegativeRate(1));
+		log.info(String.valueOf(evaluation.correct()));
+		log.info(String.valueOf(evaluation.incorrect()));
+		log.info(String.valueOf(evaluation.precision(1)));
 		
-		System.out.println(evaluation.correct());
-		System.out.println(evaluation.incorrect());
-		System.out.println(evaluation.precision(1));
-		
+				
 		try {
 			System.out.println(evaluation.toClassDetailsString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("num of instances: "+ evaluation.numInstances()+", correct: "+evaluation.correct()+", uncorrect: "+evaluation.incorrect()+
-				", percentageIncorrect: "+evaluation.pctCorrect()+", percentageIncorrect: "+evaluation.pctIncorrect());
 		
-		System.out.println(evaluation.numTruePositives(0));
-		System.out.println(evaluation.numFalsePositives(0));
+		log.info("num of instances: "+ evaluation.numInstances()+", correct: "+evaluation.correct()+", uncorrect: "+evaluation.incorrect()+
+				", percentageIncorrect: "+evaluation.pctCorrect()+", percentageIncorrect: "+evaluation.pctIncorrect());
+		log.info(String.valueOf(evaluation.numTruePositives(0)));
+		log.info(String.valueOf(evaluation.numFalsePositives(0)));
+		
 		
 		double sizeDataset = NonSoCheNomeDargli.trainingSet.size() + NonSoCheNomeDargli.testingSet.size();
 		double trainingPercentage = NonSoCheNomeDargli.trainingSet.size() / sizeDataset;
@@ -353,7 +345,7 @@ public class NonSoCheNomeDargli {
 	 * @param classifier the classifier to set
 	 */
 	public void setClassifier(EnumContainer.Classifier classifier) {
-		this.classifier = classifier;
+		NonSoCheNomeDargli.classifier = classifier;
 	}
 
 	/**
@@ -367,7 +359,7 @@ public class NonSoCheNomeDargli {
 	 * @param feature the feature to set
 	 */
 	public void setFeature(EnumContainer.Feature feature) {
-		this.feature = feature;
+		NonSoCheNomeDargli.feature = feature;
 	}
 
 	/**
@@ -381,7 +373,7 @@ public class NonSoCheNomeDargli {
 	 * @param sampling the sampling to set
 	 */
 	public void setSampling(EnumContainer.Sampling sampling) {
-		this.sampling = sampling;
+		NonSoCheNomeDargli.sampling = sampling;
 	}
 
 }

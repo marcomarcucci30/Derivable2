@@ -165,7 +165,7 @@ public class ManageFile {
 		return filesList;
 	}
 	
-	public static void createCSVFile(List<FileProject> filesProjects, List<Version> versions, LocalDate median) {
+	public static void createCSVFile(List<FileProject> filesProjects, List<Version> versions) {
 		
 		log.info("Create Dataset...");
 		
@@ -198,15 +198,17 @@ public class ManageFile {
 		//iterar tutti i file per ogni versione possibile in versions
 		for (int i= 0; i<versions.size(); i++) {
 			
-			//BOOKKEEPER: se la data della versione è oltre metà del progetto non considerare la versione
-			if (versions.get(i).getDate().isAfter(LocalDate.parse("2014-02-03")) && prop.getProperty(project).equals("BOOKKEEPER")) {
+			//BOOKKEEPER e OPENJPA: se la data della versione è oltre metà del progetto non considerare la versione
+			if ((versions.get(i).getDate().isAfter(LocalDate.parse("2014-02-03")) && prop.getProperty(project).equals("BOOKKEEPER"))
+					|| (versions.get(i).getDate().isAfter(LocalDate.parse("2010-03-30")) && prop.getProperty(project).equals("OPENJPA"))) {
 				continue;
 			}
 			
 			//OPENJPA: se la data della versione è oltre metà del progetto non considerare la versione
-			if (versions.get(i).getDate().isAfter(LocalDate.parse("2010-03-30")) && prop.getProperty(project).equals("OPENJPA")) {
+			/*if (versions.get(i).getDate().isAfter(LocalDate.parse("2010-03-30")) && prop.getProperty(project).equals("OPENJPA")) {
 				continue;
-			}
+			}*/
+			
 			//itero su tutti i file del progetto
 			for (FileProject file : filesProjects) {
 				validationFile(file, versions, i, sb);
@@ -332,68 +334,6 @@ public class ManageFile {
 		
 	}
 	
-	/*public static void createLastVersionMetrics(List<FileProject> lastVersionFiles) {
-		
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("Filename");
-		sb.append(",");
-		sb.append("LOC_added");
-		sb.append(",");
-		sb.append("MAX_LOC_added");
-		sb.append(",");
-		sb.append("AVG_LOC_addded");
-		sb.append(",");
-		sb.append("Churn");
-		sb.append(",");
-		sb.append("MAX_Churn");
-		sb.append(",");
-		sb.append("AVG_Churn");
-		sb.append(",");
-		sb.append("ChgSetSize");
-		sb.append(",");
-		sb.append("MAX_ChgSetSize");
-		sb.append(",");
-		sb.append("AVG_ChgSetSize");
-		sb.append("\n");
-		
-		for (FileProject fileProject : lastVersionFiles) {
-			Metrics metrics = fileProject.getMetrics().get(fileProject.getMetrics().indexOf(new Metrics(14)));
-		
-			sb.append(fileProject.getName());
-			sb.append(",");
-			sb.append(metrics.getLineAdded());
-			sb.append(",");
-			sb.append(metrics.getMaxLOC());
-			sb.append(",");
-			sb.append(metrics.getAvgLOC());
-			sb.append(",");
-			sb.append(metrics.getChurn());
-			sb.append(",");
-			sb.append(metrics.getMaxChurn());
-			sb.append(",");
-			sb.append(metrics.getAvgChurn());
-			sb.append(",");
-			sb.append(metrics.getChgSetSize());
-			sb.append(",");
-			sb.append(metrics.getMaxChgSetSize());
-			sb.append(",");
-			sb.append(metrics.getAvgChgSetSize());
-			sb.append("\n");
-			
-		}
-		
-		try (PrintWriter writer = new PrintWriter("LastVersionMetrics_Data_Set.csv")){
-			//create file
-			//Write CSV file
-			writer.write(sb.toString());
-			
-			
-		} catch (FileNotFoundException e) {
-			log.log(Level.SEVERE,"FileNotFoundException", e);
-		}
-		
-	}*/
 	
 
 	public static void main(String[] args) {
