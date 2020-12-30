@@ -20,8 +20,10 @@ public class Command {
 	private static String gitC = "git -C";
 	private static String ioException = "IOException in command";
 	private String interruptedException = "InterruptedException in Command.";
-	private static String pathDir = "..\\..\\" + prop.getProperty("PROJECT").toLowerCase() +"\\";
+	private static String pathDirFin = "\\";
+	private static String pathDir = "..\\..\\" + prop.getProperty("PROJECT").toLowerCase() +pathDirFin;
 	private static String repoUrl = prop.getProperty("REPO_APACHE_PREFIX")+prop.getProperty("PROJECT").toLowerCase()+".git";
+	
 
 	public Command(String keyValue) {
 		setTicket(keyValue);
