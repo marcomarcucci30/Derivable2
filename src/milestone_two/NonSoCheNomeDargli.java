@@ -235,7 +235,7 @@ public class NonSoCheNomeDargli {
 	
 	
 	private static void evaluate(Instances training, Instances testing, FilteredClassifier fc) {
-		System.out.println("Instances Testing: "+testing.numInstances());
+		log.info("Instances Testing: "+testing.numInstances());
 		weka.classifiers.Classifier classifierWeka = null;
 		switch (classifier) {
 		case NAIVE_BAYES:
@@ -260,7 +260,7 @@ public class NonSoCheNomeDargli {
 				evaluation = new Evaluation(testing);
 				evaluation.evaluateModel(fc, testing);
 			} catch (Exception e) {
-				System.out.println("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling);
+				log.info("Classifier: "+classifier+", Feature: "+feature+", Sampling: "+sampling);
 				log.log(Level.SEVERE, exception , e);
 				return;
 			}
@@ -292,7 +292,7 @@ public class NonSoCheNomeDargli {
 		
 				
 		try {
-			System.out.println(evaluation.toClassDetailsString());
+			log.info(evaluation.toClassDetailsString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -311,14 +311,30 @@ public class NonSoCheNomeDargli {
 		double defectiveTestingPercentage = majorityClass(testing, true);
 		
 		DataSetInstance dataSetInstance = new DataSetInstance(prop.getProperty(project), trainingRelease, trainingPercentage, defectiveTrainingPercentage, 
-				defectiveTestingPercentage, classifier, feature, sampling, evaluation.numTruePositives(0), evaluation.numFalsePositives(0), 
-				evaluation.numTruePositives(1),evaluation.numFalsePositives(1), evaluation.precision(1), evaluation.recall(1), 
-				evaluation.areaUnderROC(1), evaluation.kappa());
+				defectiveTestingPercentage, classifier, feature); 
+				dataSetInstance.setSampling(sampling); 
+				dataSetInstance.setTruePositive(evaluation.numTruePositives(0)); 
+				dataSetInstance.setFalsePositive(evaluation.numFalsePositives(0)); 
+				dataSetInstance.setTrueNegative(evaluation.numTruePositives(1));
+				dataSetInstance.setFalseNegative(evaluation.numFalsePositives(1)); 
+				dataSetInstance.setPrecision(evaluation.precision(1)); 
+				dataSetInstance.setRecall(evaluation.recall(1));
+				dataSetInstance.setRocArea(evaluation.areaUnderROC(1)); 
+				dataSetInstance.setKappa(evaluation.kappa());
+		
+		
 		
 		DataSetInstance dataSetInstance2 = new DataSetInstance(prop.getProperty(project), trainingRelease, trainingPercentage, defectiveTrainingPercentage, 
-				defectiveTestingPercentage, classifier, feature, sampling, evaluation.numTruePositives(0), evaluation.numFalsePositives(0), 
-				evaluation.numTruePositives(1),evaluation.numFalsePositives(1), evaluation.precision(1), evaluation.recall(1), 
-				evaluation.areaUnderROC(1), evaluation.kappa());
+				defectiveTestingPercentage, classifier, feature); 
+				dataSetInstance2.setSampling(sampling); 
+				dataSetInstance2.setTruePositive(evaluation.numTruePositives(0)); 
+				dataSetInstance2.setFalsePositive(evaluation.numFalsePositives(0)); 
+				dataSetInstance2.setTrueNegative(evaluation.numTruePositives(1));
+				dataSetInstance2.setFalseNegative(evaluation.numFalsePositives(1)); 
+				dataSetInstance2.setPrecision(evaluation.precision(1)); 
+				dataSetInstance2.setRecall(evaluation.recall(1));
+				dataSetInstance2.setRocArea(evaluation.areaUnderROC(1)); 
+				dataSetInstance2.setKappa(evaluation.kappa());
 		
 		dataSetInstances.add(dataSetInstance2);
 		
@@ -344,7 +360,7 @@ public class NonSoCheNomeDargli {
 	/**
 	 * @param classifier the classifier to set
 	 */
-	public void setClassifier(EnumContainer.Classifier classifier) {
+	public static void setClassifier(EnumContainer.Classifier classifier) {
 		NonSoCheNomeDargli.classifier = classifier;
 	}
 
@@ -358,7 +374,7 @@ public class NonSoCheNomeDargli {
 	/**
 	 * @param feature the feature to set
 	 */
-	public void setFeature(EnumContainer.Feature feature) {
+	public static void setFeature(EnumContainer.Feature feature) {
 		NonSoCheNomeDargli.feature = feature;
 	}
 
@@ -372,7 +388,7 @@ public class NonSoCheNomeDargli {
 	/**
 	 * @param sampling the sampling to set
 	 */
-	public void setSampling(EnumContainer.Sampling sampling) {
+	public static void setSampling(EnumContainer.Sampling sampling) {
 		NonSoCheNomeDargli.sampling = sampling;
 	}
 

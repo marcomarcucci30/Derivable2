@@ -204,10 +204,7 @@ public class ManageFile {
 				continue;
 			}
 			
-			//OPENJPA: se la data della versione è oltre metà del progetto non considerare la versione
-			/*if (versions.get(i).getDate().isAfter(LocalDate.parse("2010-03-30")) && prop.getProperty(project).equals("OPENJPA")) {
-				continue;
-			}*/
+			
 			
 			//itero su tutti i file del progetto
 			for (FileProject file : filesProjects) {

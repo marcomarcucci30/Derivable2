@@ -29,19 +29,10 @@ public class DataSetInstance {
 		// nothing to do
 	}
 
-	/*public DataSetInstance(String project2, int trainingRelease2, Classifier classifier2, Classifier classifier3, 
-			Feature feature2, Sampling sampling2) {
-		setDataset(project2);
-		setTrainingRelease(trainingRelease2);
-		setClassifier(classifier2);
-		setFeature(feature2);
-		setSampling(sampling2);
-	}*/
+	
 
 	public DataSetInstance(String project2, int trainingRelease2, double trainingPercentage2, double defectiveTrainingPercentage2, double defectiveTestingPercentage2, Classifier classifier2,
-			Feature feature2, Sampling sampling2, double truePositiveRate, double falsePositiveRate,
-			double trueNegativeRate, double falseNegativeRate, double precision2, double recall2, double areaUnderROC,
-			double kappa2) {
+			Feature feature2){
 		setDataset(project2);
 		setTrainingRelease(trainingRelease2);
 		setTrainingPercentage(trainingPercentage2);
@@ -49,15 +40,6 @@ public class DataSetInstance {
 		setDefectiveTestingPercentage(defectiveTestingPercentage2);
 		setClassifier(classifier2);
 		setFeature(feature2);
-		setSampling(sampling2);
-		setTruePositive(truePositiveRate);
-		setFalsePositive(falsePositiveRate);
-		setTrueNegative(trueNegativeRate);
-		setFalseNegative(falseNegativeRate);
-		setPrecision(precision2);
-		setRecall(recall2);
-		setRocArea(areaUnderROC);
-		setKappa(kappa2);
 	}
 	
 	public void update(DataSetInstance dataSetInstance) {
@@ -336,11 +318,16 @@ public class DataSetInstance {
 				return false;
 		} else if (!dataset.equals(other.dataset))
 			return false;
-		if (feature != other.feature)
+		if (feature != other.feature) {
 			return false;
-		if (sampling != other.sampling)
+		}
+		if (sampling != other.sampling) {
 			return false;
-		return true;
+		}else {
+			return true;
+		}
+			
+		
 	}
 
 	@Override
