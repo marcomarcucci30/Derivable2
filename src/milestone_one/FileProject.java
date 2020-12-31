@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*Classe che rappresenta un file .java del progetto considerato*/
+
 public class FileProject {
 
 	private String name;

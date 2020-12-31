@@ -212,6 +212,7 @@ public class Command {
 		return new ArrayList<>(new LinkedHashSet<>(files));//remove the duplicated lines
 	}
 	
+	//ricava la data di aggiunta e rimozione del file specificato
 	public static List<BufferedReader> getAddRemoveDate(String filename) {
 		String commandAdd = gitC+" "+ pathDir +" --no-pager log --diff-filter=A --pretty=format:\"%cd\" --date=iso-strict -- "+filename;
 		String commanRemove = gitC+" "+ pathDir +" --no-pager log --diff-filter=D --pretty=format:\"%cd\" --date=iso-strict -- "+filename;
@@ -331,7 +332,7 @@ public class Command {
 	
 	
 	//return list of file c
-	//
+	//ricava per ogni file, modificato tra il primo e il secondo commit, il numero di linee aggiunte e rimosse
 	public static List<List<String>> getCommitChange(String idCommitPrev, String idCommitNext) {
 		String command = gitC+" "+ pathDir +" --no-pager diff --numstat "+ idCommitPrev+ " "+ idCommitNext+ " *.java";
 		

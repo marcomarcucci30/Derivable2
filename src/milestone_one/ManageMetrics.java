@@ -24,6 +24,7 @@ public class ManageMetrics {
 	//each file has a list of metrics; one for each version of the file
 	public void calculateMetrics() {
 		boolean skipCommit = false;
+		//<..,<dateCommit, idCommit>, ..>
 		List<List<String>> listCommit = Command.getAllCommit();
 		
 		int versionCondidered = 1;

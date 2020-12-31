@@ -186,7 +186,9 @@ public class Main {
 	
 	
 	
-
+	/*CONTROLLO SULLA DATA DI CREAZIONE DEL FILE
+	 * 
+	 * Controllo se il file è stato creato prima dell'IV, tra la IV e la FV oppure dopo la FV*/ 
 	private static void checkBuggyVersion(Ticket ticket, FileProject fileProject, List<Version> versionList) {
 		
 		LocalDate addDate = fileProject.getAddDate();
@@ -224,10 +226,13 @@ public class Main {
 		}		
 	}
 	
-	//check elimination date when add date is before or equal to IV
+	
+	/*CONTROLLO SULLA DATA DI ELIMINAZIONE DEL FILE
+	 * 
+	 * */
 	private static void eliminationDate(List<Version> versionList, LocalDate removeDate, LocalDate fixVersion, LocalDate affectsVersion, FileProject fileProject, Ticket ticket) {
 		if (removeDate == null || removeDate.isAfter(fixVersion) || removeDate.isEqual(fixVersion)) {
-			//se la data di remove non esiste o è dopo fix version prendo tutti affects version
+			//se la data di remove non esiste o è dopo fix version considero tutte le affects version per il file.
 			
 			fileProject.updateAffectsVersionIndex(ticket.getAffectsVersions().get(0).getIndex(), ticket.getFixVersions().get(0).getIndex());
 			
@@ -283,7 +288,6 @@ public class Main {
 		GetReleaseInfo.main(null);
 		
 		//Create versions list of the the project form csv file
-	
 		List<Version> versions = ManageFile.readFile();
 		Proportion.setVersions(versions);
 		//get tickets of project froma jira
@@ -301,7 +305,7 @@ public class Main {
 			}
 			
 		}
-		msg = "Ticket without affect version ="+count+"\n";
+		msg = "Ticket with affect version ="+count+"\n";
 		log.log(Level.INFO, msg);
 		
 		log.info("Calculate Proportion e Buggy...");
@@ -322,7 +326,7 @@ public class Main {
 			
 			//buggy file
 			if (ticket.getAffectsVersions().get(0).getIndex() < ticket.getFixVersions().get(0).getIndex()) {
-				buggy(filesProjects,ticket, versions);
+				buggy(filesProjects, ticket, versions);
 			}
 			
 		}

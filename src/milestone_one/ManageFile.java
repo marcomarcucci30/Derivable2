@@ -237,7 +237,7 @@ public class ManageFile {
 		}				
 		LocalDate currentVersionDate = versions.get(i).getDate();
 		
-		//per prima cosa controlla che il file esisteva in quella versione
+		//per prima cosa controllo che il file esisteva in quella versione
 		//anche se viene eliminato nella stessa versione rimane sempre buggato
 		if (i<=(versions.size()-2) && addFileDate.isBefore(nextVersionDate)  && (removeFileDate == null || removeFileDate.isAfter(currentVersionDate))) {
 			//caso in cui il file  ESISTE, cioè la data di add del file è precedente alla versione successiva e la date di remove del file è successiva alla versione corrente
@@ -264,7 +264,7 @@ public class ManageFile {
 		}else if (i>(versions.size()-2)){
 			validateFileInLastVersion(file, versions, i, sb, removeFileDate, currentVersionDate);
 		}else {
-			//file non esiste ancora quindi devo scriverlo o no???
+			//file non esiste ancora
 		}
 	}
 	
@@ -292,7 +292,7 @@ public class ManageFile {
 				sb1.append("\n");
 			}
 		}else {
-			//file non esiste più quindi devo scriverlo o no???
+			//file non esiste più 
 		}
 	}
 

@@ -73,21 +73,24 @@ public class Proportion {
 		
 	}
 	
-	/*0, if file in ticket non buggy, -1 if ticket don't consider, 1 if the file in the ticket are buggy*/ 
+	/*return 0, if file in ticket non buggy, -1 if ticket don't consider, 1 if the file in the ticket are buggy*/ 
 	public static int updateProportion(Ticket ticket) {
 		//if the ticket does not have a fixed version, the latter is retrieved 
 		if (ticket.getFixVersions().isEmpty()) {
-			//retrieve date of last
+			//retrieve date of last commit
 			String dateLastCommitString = Command.log(ticket.getName()+":");
 			//if there isn't commit for the ticket, discard the ticket
 			if (dateLastCommitString != null) {
 				LocalDate dateLastCommit = LocalDate.parse(dateLastCommitString);
 				ticket.setDateLastCommit(dateLastCommit);
+				//no fiversion, yes DatelastCommit
 				retrieveVersionIndex(ticket, 0);
 			}else {
+				//no fixversion, no dateLastCommit
 				retrieveVersionIndex(ticket, 1);
 			}
-		}else {		
+		}else {
+			//yes fixversion
 			retrieveVersionIndex(ticket, 2);
 		}
 		

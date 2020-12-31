@@ -16,7 +16,7 @@ public class Ticket implements Comparable<Ticket>{
 	private List<Version> fixVersions;
 	private Version openingVersion;
 	
-
+	/*Classe che rappresenta un un Ticket del progetto considerato*/
 	
 	public Ticket() {
 		this.fixVersions = new ArrayList<>();
