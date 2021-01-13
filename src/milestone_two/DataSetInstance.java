@@ -41,20 +41,6 @@ public class DataSetInstance {
 		setClassifier(classifier2);
 		setFeature(feature2);
 	}
-	
-	public void update(DataSetInstance dataSetInstance) {
-		setnRun(getnRun()+1);
-		
-		setTruePositive(getTruePositive()*((getnRun()-1)/getnRun()) + (dataSetInstance.getTruePositive()*(1/getnRun())));
-		setFalsePositive(getFalsePositive()*((getnRun()-1)/getnRun()) + (dataSetInstance.getFalsePositive()*(1/getnRun())));
-		setTrueNegative(getTrueNegative()*((getnRun()-1)/getnRun()) + (dataSetInstance.getTrueNegative()*(1/getnRun())));
-		setFalseNegative(getFalseNegative()*((getnRun()-1)/getnRun()) + (dataSetInstance.getFalseNegative()*(1/getnRun())));
-		
-		setPrecision(getPrecision()*((getnRun()-1)/getnRun()) + (dataSetInstance.getPrecision()*(1/getnRun())));
-		setRecall(getRecall()*((getnRun()-1)/getnRun()) + (dataSetInstance.getRecall()*(1/getnRun())));
-		setRocArea(getRocArea()*((getnRun()-1)/getnRun()) + (dataSetInstance.getRocArea()*(1/getnRun())));
-		setKappa(getKappa()*((getnRun()-1)/getnRun()) + (dataSetInstance.getKappa()*(1/getnRun())));
-	}
 
 	public static void main(String[] args) {
 		// nothing to do
@@ -331,13 +317,6 @@ public class DataSetInstance {
 				+ ", falsePositive=" + falsePositive + ", trueNegative=" + trueNegative + ", falseNegative="
 				+ falseNegative + ", precision=" + precision + ", recall=" + recall + ", rocArea=" + rocArea
 				+ ", kappa=" + kappa + ", nRun=" + nRun + "]";
-	}
-	
-	
-	public String toStringForAverageDataset() {
-		return dataset + ", "+classifier + ", " + feature + ", " + sampling + ", " + truePositive+ ", " + falsePositive + 
-				", " + trueNegative + ", "+ falseNegative + ", " + precision + ", " + recall + ", " + rocArea+ ", " 
-				+ kappa +"\n";
 	}
 	
 	public String toStringForDataset() {

@@ -40,7 +40,6 @@ public class Main {
 	
 	
 	
-	private static List<DataSetInstance> averageDataSetInstances = new ArrayList<>();
 	static List<DataSetInstance> dataSetInstances = new ArrayList<>();
 	private static int trainingRelease;
 	
@@ -78,12 +77,6 @@ public class Main {
 			classifierSelection();
 		}
 		
-		log.info("\nNumber of element in list: "+averageDataSetInstances.size());
-		for (DataSetInstance dataSetInstance : averageDataSetInstances) {
-			log.info("\n"+dataSetInstance.toString());
-		}
-		
-		manageDataSet.createAverageDataset(averageDataSetInstances);
 		manageDataSet.createDataset(dataSetInstances);
 		
 	}
@@ -309,7 +302,7 @@ public class Main {
 		
 		double defectiveTrainingPercentage = majorityClass(training, true);
 		double defectiveTestingPercentage = majorityClass(testing, true);
-		
+	
 		DataSetInstance dataSetInstance = new DataSetInstance(prop.getProperty(project), trainingRelease, trainingPercentage, defectiveTrainingPercentage, 
 				defectiveTestingPercentage, classifier, feature); 
 				dataSetInstance.setSampling(sampling); 
@@ -322,31 +315,8 @@ public class Main {
 				dataSetInstance.setRocArea(evaluation.areaUnderROC(1)); 
 				dataSetInstance.setKappa(evaluation.kappa());
 		
-		
-		
-		DataSetInstance dataSetInstance2 = new DataSetInstance(prop.getProperty(project), trainingRelease, trainingPercentage, defectiveTrainingPercentage, 
-				defectiveTestingPercentage, classifier, feature); 
-				dataSetInstance2.setSampling(sampling); 
-				dataSetInstance2.setTruePositive(evaluation.numTruePositives(0)); 
-				dataSetInstance2.setFalsePositive(evaluation.numFalsePositives(0)); 
-				dataSetInstance2.setTrueNegative(evaluation.numTruePositives(1));
-				dataSetInstance2.setFalseNegative(evaluation.numFalsePositives(1)); 
-				dataSetInstance2.setPrecision(evaluation.precision(1)); 
-				dataSetInstance2.setRecall(evaluation.recall(1));
-				dataSetInstance2.setRocArea(evaluation.areaUnderROC(1)); 
-				dataSetInstance2.setKappa(evaluation.kappa());
-		
-		dataSetInstances.add(dataSetInstance2);
-		
-		if (!averageDataSetInstances.contains(dataSetInstance)) {
-			averageDataSetInstances.add(dataSetInstance);
-			dataSetInstance.setnRun(dataSetInstance.getnRun()+1);
-			return;
-		}
-		
-		int indexInstance = averageDataSetInstances.indexOf(dataSetInstance);
-		averageDataSetInstances.get(indexInstance).update(dataSetInstance);
-		
+		dataSetInstances.add(dataSetInstance);
+				
 		
 	}
 

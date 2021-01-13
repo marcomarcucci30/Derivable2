@@ -99,27 +99,7 @@ public class ManageDataSet {
 		}
 	    
 	}
-	
-	
-	public void createAverageDataset(List<DataSetInstance> dataSetInstances) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Dataset, Classifier, Feature Selection, "
-				+ "Balancing,TP, FP, TN, FN, Precision, Recall, ROC Area, Kappa\n");
 		
-		for (DataSetInstance dataSetInstance : dataSetInstances) {
-			sb.append(dataSetInstance.toStringForAverageDataset());
-		}
-		
-		try (PrintWriter writer = new PrintWriter(new File(prop.getProperty(project)+"_Average_Data_Set_Classifier.csv"))){
-			//create file
-			//Write CSV file
-			writer.write(sb.toString());
-			
-		} catch (FileNotFoundException e) {
-			log.log(Level.SEVERE,"FileNotFoundException", e);
-		}
-	}
-	
 	public void createDataset(List<DataSetInstance> dataSetInstances) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Dataset, #TrainingRelease, %training, %Defective in training, %Defective in testing, Classifier, "
